@@ -5,18 +5,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
 #include <threads.h>
 #endif
 
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
 static mtx_t mem_mtx;
 static uz_list_head_t mem_allocs;
 #endif
 
 long uz_memory_init()
 {
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
   mtx_init(&mem_mtx, mtx_plain);
   uz_list_init(&mem_allocs);
 #endif
@@ -25,7 +25,7 @@ long uz_memory_init()
 
 void uz_memory_free()
 {
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
   uz_list_entry_t* entry;
   uz_list_entry_t* safe;
   uz_list_for_each_safe(entry, safe, &mem_allocs)
@@ -45,7 +45,7 @@ void uz_memory_free()
 
 void* uz_new(const size_t size, const uz_source_location_t source_location)
 {
-#if UZ_DEBUG
+#if UZ_DEBUG_BUILD
   // ReSharper disable once CppDFAMemoryLeak
   char* data = malloc(size + sizeof(uz_memory_header_t));
   if (data) {
@@ -67,7 +67,7 @@ void* uz_new(const size_t size, const uz_source_location_t source_location)
 
 void uz_free(void* memory)
 {
-#if UZ_DEBUG
+#if UZ_DEBUG_BUILD
   uz_memory_header_t* header =
     (uz_memory_header_t*)((char*)memory - sizeof(uz_memory_header_t));
   uz_list_remove(&header->link);

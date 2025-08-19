@@ -2,11 +2,11 @@
 
 #include <stddef.h>
 
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
 #include "uz_list.h"
 #endif
 
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
 
 typedef struct {
   const char* file;

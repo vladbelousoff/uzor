@@ -19,7 +19,7 @@ const char* uz_filename(const char* filename);
 #define uz_log_err(_fmt, ...)                                                  \
   uz_log("ERR", UZ_FILENAME, __LINE__, __FUNCTION__, _fmt, ##__VA_ARGS__)
 
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
 #define uz_log_wrn(_fmt, ...)                                                  \
   uz_log("WRN", UZ_FILENAME, __LINE__, __FUNCTION__, _fmt, ##__VA_ARGS__)
 #else
@@ -28,7 +28,7 @@ const char* uz_filename(const char* filename);
   } while (0)
 #endif
 
-#ifdef UZ_DEBUG
+#ifdef UZ_DEBUG_BUILD
 #define uz_log_dbg(_fmt, ...)                                                  \
   uz_log("DBG", UZ_FILENAME, __LINE__, __FUNCTION__, _fmt, ##__VA_ARGS__)
 #else

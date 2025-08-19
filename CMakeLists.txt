@@ -12,6 +12,6 @@ file(GLOB_RECURSE SOURCE_FILES
 add_executable(uzor ${SOURCE_FILES})
 
 target_compile_definitions(uzor PRIVATE
-        $<$<CONFIG:Debug>:UZ_DEBUG>
+        $<$<CONFIG:Debug>:UZ_DEBUG_BUILD>
         $<$<PLATFORM_ID:Windows>:_CRT_SECURE_NO_WARNINGS>
 )
