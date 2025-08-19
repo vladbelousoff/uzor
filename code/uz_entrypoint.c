@@ -9,6 +9,9 @@ typedef struct {
   const char* name;
 } uz_system;
 
+#define UZ_ARRAY_SIZE(x)                                                       \
+  _Generic(&(x), __typeof__(&(x)): (sizeof(x) / sizeof((x)[0])))
+
 static uz_system systems[] = {
   { uz_memory_init, uz_memory_free, "Memory" },
 };
@@ -23,7 +26,7 @@ static void free_systems_starting_from(const int index)
 
 static long init_systems(void)
 {
-  for (int i = 0; i < sizeof(systems) / sizeof(systems[0]); ++i) {
+  for (int i = 0; i < UZ_ARRAY_SIZE(systems); ++i) {
     uz_log_dbg("Init system '%s'", systems[i].name);
     if (systems[i].init() != 0) {
       free_systems_starting_from(i - 1);
@@ -36,7 +39,7 @@ static long init_systems(void)
 
 static void free_systems(void)
 {
-  free_systems_starting_from(sizeof(systems) / sizeof(systems[0]) - 1);
+  free_systems_starting_from(UZ_ARRAY_SIZE(systems) - 1);
 }
 
 int main(void)
