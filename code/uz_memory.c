@@ -17,7 +17,9 @@ static uz_list_head_t mem_allocs;
 long uz_memory_init()
 {
 #ifdef UZ_DEBUG_BUILD
-  mtx_init(&mem_mtx, mtx_plain);
+  if (mtx_init(&mem_mtx, mtx_plain) != thrd_success) {
+    return 1;
+  }
   uz_list_init(&mem_allocs);
 #endif
   return 0;
