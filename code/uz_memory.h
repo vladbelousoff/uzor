@@ -35,5 +35,7 @@ typedef int uz_source_location_t;
 long uz_memory_init();
 void uz_memory_free();
 
-void* uz_new(size_t size, uz_source_location_t source_location);
+void* uz_malloc(size_t size, uz_source_location_t source_location);
+void* uz_realloc(void* memory, size_t size,
+                 uz_source_location_t source_location);
 void uz_free(void* memory);

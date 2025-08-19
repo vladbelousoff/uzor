@@ -45,7 +45,7 @@ void uz_memory_free()
 #endif
 }
 
-void* uz_new(const size_t size, const uz_source_location_t source_location)
+void* uz_malloc(const size_t size, const uz_source_location_t source_location)
 {
 #if UZ_DEBUG_BUILD
   // ReSharper disable once CppDFAMemoryLeak
@@ -64,6 +64,21 @@ void* uz_new(const size_t size, const uz_source_location_t source_location)
 #else
   (void)source_location;
   return malloc(size);
+#endif
+}
+
+void* uz_realloc(void* memory, const size_t size,
+                 const uz_source_location_t source_location)
+{
+#if UZ_DEBUG_BUILD
+  uz_memory_header_t* header =
+    (uz_memory_header_t*)((char*)memory - sizeof(uz_memory_header_t));
+  header->source_location = source_location;
+  header->buffer_size = size;
+  return realloc(memory, size + sizeof(uz_memory_header_t));
+#else
+  (void)source_location;
+  return realloc(memory, size);
 #endif
 }
 
