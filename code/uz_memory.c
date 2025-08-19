@@ -27,8 +27,8 @@ void uz_memory_free()
 {
 #ifdef UZ_DEBUG_BUILD
   uz_list_entry_t* entry;
-  uz_list_entry_t* safe;
-  uz_list_for_each_safe(entry, safe, &mem_allocs)
+  uz_list_entry_t* tmp;
+  uz_list_for_each_safe(entry, tmp, &mem_allocs)
   {
     uz_memory_header_t* header =
       uz_list_record(entry, uz_memory_header_t, link);
