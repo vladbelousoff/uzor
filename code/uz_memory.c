@@ -14,7 +14,7 @@ static mtx_t mem_mtx;
 static uz_list_head_t mem_allocs;
 #endif
 
-long uz_memory_init()
+long uz_memory_init(void)
 {
 #ifdef UZ_DEBUG_BUILD
   if (mtx_init(&mem_mtx, mtx_plain) != thrd_success) {
@@ -25,7 +25,7 @@ long uz_memory_init()
   return 0;
 }
 
-void uz_memory_free()
+void uz_memory_free(void)
 {
 #ifdef UZ_DEBUG_BUILD
   uz_list_entry_t* entry;
@@ -33,7 +33,7 @@ void uz_memory_free()
   uz_list_for_each_safe(entry, tmp, &mem_allocs)
   {
     uz_memory_header_t* header =
-      uz_list_record(entry, uz_memory_header_t, link);
+      uz_list_offset(entry, uz_memory_header_t, link);
     uz_log_err("Leaked memory, file: %s, line: %llu, size: %llu",
                uz_filename(header->source_location.file),
                header->source_location.line, header->buffer_size);

@@ -12,7 +12,7 @@
  * @param field The name of the list_entry within the struct.
  * @return A pointer to the containing structure.
  */
-#define uz_list_record(address, type, field)                                   \
+#define uz_list_offset(address, type, field)                                   \
   ((type*)((char*)(address) - (char*)(&((type*)0)->field)))
 
 /**
